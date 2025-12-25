@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h2>💰 Exclusive Deals</h2>
+  <p-button *ngIf="isAdmin" label="Create New Coupon" icon="pi pi-plus" routerLink="/add"></p-button>
+</div>
+
+<p-dataView #dv [value]="coupons" [paginator]="true" [rows]="8" layout="grid">
+
+  <ng-template let-coupon pTemplate="gridItem">
+    <div class="col-12 md:col-6 lg:col-3 p-2">
+
+      <div class="coupon-card" [routerLink]="['/coupon', coupon.id]" style="cursor: pointer;">
+        <div class="card-img-wrapper">
+          <img [src]="'https://picsum.photos/id/' + (coupon.id + 10) + '/300/150'" alt="Offer" />
+        </div>
+
+        <div class="card-content">
+          <div class="card-header">
+            <span class="title" [title]="coupon.title">{{ coupon.title }}</span>
+            <p-tag [severity]="coupon.isActive ? 'success' : 'danger'" [value]="coupon.isActive ? 'Active' : 'Expired'"
+              styleClass="text-xs">
+            </p-tag>
+          </div>
+
+          <div class="description">
+            {{ coupon.description }}
+          </div>
+
+          <div class="price-row">
+            <span class="discount">{{ coupon.discountAmount }}% OFF</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div *ngIf="isAdmin" class="admin-actions">
+            <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm"
+              [routerLink]="['/edit', coupon.id]"></button>
+            <button pButton icon="pi pi-trash" class="p-button-text p-button-danger p-button-sm"
+              (click)="deleteCoupon(coupon.id)"></button>
+          </div>
+          <button *ngIf="!isAdmin" pButton label="Redeem" class="p-button-outlined p-button-sm w-full"></button>
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+</p-dataView>

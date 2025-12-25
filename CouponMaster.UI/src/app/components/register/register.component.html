@@ -1,0 +1,50 @@
+<div class="register-wrapper">
+  <div class="register-card">
+    <div class="card-header">
+      <h2>Create Account</h2>
+      <p>Join CouponMaster today</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input 
+          id="username" 
+          type="text" 
+          formControlName="username" 
+          placeholder="e.g. johndoe"
+          [class.invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+        
+        <span class="error-text" *ngIf="registerForm.get('username')?.hasError('minlength')">
+          Must be at least 3 characters.
+        </span>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password" 
+          placeholder="••••••••"
+          [class.invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        
+        <span class="error-text" *ngIf="registerForm.get('password')?.hasError('minlength')">
+          Must be at least 6 characters.
+        </span>
+      </div>
+
+      <div class="message-box error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="message-box success" *ngIf="successMessage">{{ successMessage }}</div>
+
+      <button type="submit" [disabled]="registerForm.invalid || isLoading">
+        {{ isLoading ? 'Creating Account...' : 'Register' }}
+      </button>
+
+      <div class="footer-link">
+        Already have an account? <a routerLink="/login">Log In</a>
+      </div>
+    </form>
+  </div>
+</div>

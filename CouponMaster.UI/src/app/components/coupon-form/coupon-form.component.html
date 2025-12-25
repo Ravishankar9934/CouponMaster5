@@ -1,0 +1,39 @@
+<div class="form-wrapper">
+  <p-card [header]="isEditMode ? 'Edit Coupon' : 'Create New Coupon'" [style]="{width: '500px'}">
+    
+    <form [formGroup]="couponForm" (ngSubmit)="onSubmit()" class="p-fluid">
+      
+      <div class="field">
+        <label for="title">Coupon Code</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-tag"></i>
+          <input id="title" type="text" pInputText formControlName="title" placeholder="e.g. SUMMER2025" />
+        </span>
+        <small class="p-error" *ngIf="couponForm.get('title')?.invalid && couponForm.get('title')?.touched">Title is required</small>
+      </div>
+
+      <div class="field">
+        <label for="desc">Description</label>
+        <textarea id="desc" rows="3" pInputTextarea formControlName="description"></textarea>
+      </div>
+
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="discount">Discount %</label>
+          <p-inputNumber formControlName="discountAmount" suffix="%" [min]="1" [max]="100"></p-inputNumber>
+        </div>
+        
+        <div class="field col">
+          <label for="date">Expiry Date</label>
+          <p-calendar formControlName="expiryDate" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+        </div>
+      </div>
+
+      <div class="actions">
+        <p-button label="Cancel" styleClass="p-button-text" routerLink="/"></p-button>
+        <p-button label="Save Coupon" type="submit" [disabled]="couponForm.invalid"></p-button>
+      </div>
+
+    </form>
+  </p-card>
+</div>

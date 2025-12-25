@@ -1,0 +1,18 @@
+/* Global Variables */
+$primary: #6366f1;
+$bg-color: #f8fafc;
+$card-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+
+body {
+  background-color: $bg-color;
+  font-family: 'Inter', sans-serif; /* Clean font */
+  margin: 0;
+}
+
+/* Helper Class for Grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive magic */
+  gap: 2rem;
+  padding: 2rem;
+}

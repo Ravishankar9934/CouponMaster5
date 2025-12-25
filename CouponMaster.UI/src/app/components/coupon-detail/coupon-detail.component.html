@@ -1,0 +1,47 @@
+<div class="detail-container" *ngIf="coupon; else loader">
+  
+  <p-card styleClass="detail-card">
+    <div class="grid nested-grid">
+      
+      <div class="col-12 md:col-5 image-section">
+        <img [src]="'https://picsum.photos/id/' + (coupon.id + 10) + '/500/500'" 
+             alt="Coupon Image" class="product-image">
+      </div>
+
+      <div class="col-12 md:col-7 content-section">
+        
+        <div class="header-row">
+          <h1 class="title">{{ coupon.title }}</h1>
+          <p-tag [severity]="coupon.isActive ? 'success' : 'danger'" 
+                 [value]="coupon.isActive ? 'Active' : 'Expired'" 
+                 styleClass="text-lg px-3 py-1"></p-tag>
+        </div>
+
+        <div class="discount-badge">
+          {{ coupon.discountAmount }}% OFF
+        </div>
+
+        <div class="description-box">
+          <h3>Description</h3>
+          <p>{{ coupon.description }}</p>
+          <p>This exclusive offer is valid until <strong>{{ coupon.expiryDate | date:'fullDate' }}</strong>.</p>
+        </div>
+
+        <div class="action-buttons">
+          <button pButton label="Redeem Offer" icon="pi pi-ticket" 
+                  class="p-button-lg p-button-primary" (click)="redeem()"></button>
+          
+          <button pButton label="Back to List" icon="pi pi-arrow-left" 
+                  class="p-button-outlined p-button-secondary ml-2" (click)="goBack()"></button>
+        </div>
+
+      </div>
+    </div>
+  </p-card>
+</div>
+
+<ng-template #loader>
+  <div class="spinner-container">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i> Loading...
+  </div>
+</ng-template>

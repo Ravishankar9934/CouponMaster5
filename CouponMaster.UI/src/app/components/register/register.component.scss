@@ -1,0 +1,134 @@
+// Variables for consistent colors
+$primary-color: #4f46e5; // Modern Indigo
+$primary-hover: #4338ca;
+$error-color: #ef4444;
+$success-color: #10b981;
+$bg-color: #f3f4f6;
+
+.register-wrapper {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $bg-color;
+  padding: 1rem;
+}
+
+.register-card {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); // Soft deep shadow
+
+  .card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      margin: 0;
+      color: #111827;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    p {
+      margin-top: 0.5rem;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+  }
+
+  .input-group {
+    margin-bottom: 1.25rem;
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+      }
+
+      &.invalid {
+        border-color: $error-color;
+        background-color: #fef2f2;
+      }
+    }
+
+    .error-text {
+      display: block;
+      margin-top: 0.25rem;
+      color: $error-color;
+      font-size: 0.75rem;
+    }
+  }
+
+  .message-box {
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    text-align: center;
+
+    &.error {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    &.success {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-hover;
+    }
+
+    &:disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+    }
+  }
+
+  .footer-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+
+    a {
+      color: $primary-color;
+      font-weight: 600;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
