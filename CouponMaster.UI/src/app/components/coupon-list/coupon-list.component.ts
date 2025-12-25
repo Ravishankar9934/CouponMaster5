@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Coupon } from 'src/app/models/coupon.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CouponService } from 'src/app/services/coupon.service';
@@ -13,7 +14,7 @@ export class CouponListComponent implements OnInit {
  coupons: Coupon[] = [];
   isAdmin = false; // <--- Track this
 
-  constructor(private couponService: CouponService, private auth: AuthService) { }
+  constructor(private couponService: CouponService, private auth: AuthService,private router: Router) { }
 
   ngOnInit(): void {
     // Check role immediately
@@ -30,7 +31,12 @@ export class CouponListComponent implements OnInit {
       this.couponService.deleteCoupon(id).subscribe(() => {
         // Refresh list after delete
         this.coupons = this.coupons.filter(c => c.id !== id);
+        this.router.navigate(['/']);
       });
+    }
+    else{
+      console.log("Deletion cancelled");
+      this.router.navigate(['/']);
     }
   }
 }
