@@ -33,9 +33,9 @@
         <div class="card-footer">
           <div *ngIf="isAdmin" class="admin-actions">
             <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm"
-              [routerLink]="['/edit', coupon.id]"></button>
+              [routerLink]="['/edit', coupon.id]" (click)="$event.stopPropagation()"></button>
             <button pButton icon="pi pi-trash" class="p-button-text p-button-danger p-button-sm"
-              (click)="deleteCoupon(coupon.id)"></button>
+              (click)="deleteCoupon(coupon.id); $event.stopPropagation()"></button>
           </div>
           <button *ngIf="!isAdmin" pButton label="Redeem" class="p-button-outlined p-button-sm w-full"></button>
         </div>

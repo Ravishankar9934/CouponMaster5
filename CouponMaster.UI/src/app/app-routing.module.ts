@@ -10,7 +10,7 @@ import { CouponDetailComponent } from './components/coupon-detail/coupon-detail.
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }, // <--- NEW
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] }, // <--- NEW
   // Protect these routes
   { path: '', component: CouponListComponent, canActivate: [AuthGuard] },
   { path: 'add', component: CouponFormComponent, canActivate: [AuthGuard, AdminGuard] },
