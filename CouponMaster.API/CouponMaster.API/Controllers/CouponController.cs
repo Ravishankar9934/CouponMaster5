@@ -7,6 +7,9 @@ using CouponMaster.Models.DTOs;
 
 using Microsoft.AspNetCore.Authorization; // Import this
 
+using System.Security.Claims; // Needed to read Token
+using Microsoft.Extensions.Logging;
+
 namespace CouponMaster.API.Controllers
 {
     // // [Route] defines the URL pattern: https://localhost:xxxx/api/coupon
@@ -20,11 +23,13 @@ namespace CouponMaster.API.Controllers
     public class CouponController : ControllerBase
     {
         private readonly ICouponManager _couponManager;
+        private readonly ILogger<CouponController> _logger;
 
         // Constructor Injection: We ask for the Manager
-        public CouponController(ICouponManager couponManager)
+        public CouponController(ICouponManager couponManager, ILogger<CouponController> logger)
         {
             _couponManager = couponManager;
+            _logger = logger;
         }
 
         // GET: api/coupon
@@ -100,7 +105,7 @@ namespace CouponMaster.API.Controllers
             return NoContent(); // 204 No Content is standard for Updates
         }
 
-        
+
         // DELETE: api/v1/coupon/5
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
@@ -114,6 +119,34 @@ namespace CouponMaster.API.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPost("redeem/{id}")]
+        public async Task<IActionResult> RedeemCoupon(int id)
+        {
+            _logger.LogInformation("RedeemCoupon called for coupon id: {Id}", id);
+            // 1. Get User ID from the Token (The "Sub" or "NameIdentifier" claim)
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // If your token saves Username instead of ID, you might need to look up ID first.
+            // Assuming we saved ID in the claim (Requires a small tweak to AuthController, see note below).
+            // For now, let's assume we fetch the user by username:
+            var username = User.Identity.Name;
+
+            // Call Manager (We'll implement logic there)
+            var success = await _couponManager.RedeemCouponAsync(username, id);
+
+            if (!success) return BadRequest("You have already redeemed this coupon!");
+
+            return Ok(new { message = "Coupon redeemed successfully!" });
+        }
+
+        [HttpGet("my-coupons")]
+        public async Task<IActionResult> GetMyCoupons()
+        {
+            var username = User.Identity.Name;
+            var coupons = await _couponManager.GetCouponsByUsernameAsync(username);
+            return Ok(coupons);
         }
     }
 }

@@ -16,5 +16,9 @@ namespace CouponMaster.Abstraction
         
        // Returns "Coupon?" because it might be null if the ID doesn't exist
         Task<Coupon?> GetCouponByIdAsync(int id);
+
+        Task<bool> RedeemCouponAsync(string username, int couponId);
+        Task<IEnumerable<Coupon>> GetCouponsByUsernameAsync(string username);
+
     }
 }

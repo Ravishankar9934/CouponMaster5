@@ -7,16 +7,19 @@ import { AuthGuard } from './guards/auth.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { AdminGuard } from './guards/admin.guard';
 import { CouponDetailComponent } from './components/coupon-detail/coupon-detail.component';
+import { MyCouponsComponent } from './components/my-coupons/my-coupons.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] }, // <--- NEW
+  { path: 'register', component: RegisterComponent }, // <--- NEW
   // Protect these routes
   { path: '', component: CouponListComponent, canActivate: [AuthGuard] },
   { path: 'add', component: CouponFormComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'edit/:id', component: CouponFormComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'coupon/:id', component: CouponDetailComponent, canActivate: [AuthGuard] },
+  { path: 'my-coupons', component: MyCouponsComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' } // Wildcard: redirect unknown to home
+
 ];
 
 @NgModule({
