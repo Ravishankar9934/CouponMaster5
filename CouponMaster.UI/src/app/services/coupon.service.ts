@@ -41,4 +41,12 @@ export class CouponService {
   deleteCoupon(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  redeemCoupon(id: number) {
+    return this.http.post(`${this.apiUrl}/redeem/${id}`, {});
+  }
+
+  getMyCoupons() {
+    return this.http.get<Coupon[]>(`${this.apiUrl}/my-coupons`);
+  }
 }

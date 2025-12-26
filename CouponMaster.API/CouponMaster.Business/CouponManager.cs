@@ -127,5 +127,20 @@ namespace CouponMaster.Business
             _logger.LogInfo($"Deleted coupon {id}");
             return true;
         }
+
+        public async Task<bool> RedeemCouponAsync(string username, int couponId)
+        {
+            // Logic:
+            // 1. Get UserId from Username
+            // 2. Check if already redeemed
+            // 3. Insert into UserCoupons
+            return await _repo.RedeemCouponAsync(username, couponId);
+        }
+        // (You will need to add similar methods to Repository)
+
+        public async Task<IEnumerable<Coupon>> GetCouponsByUsernameAsync(string username)
+        {
+            return await _repo.GetCouponsByUsernameAsync(username);
+        }
     }
 }

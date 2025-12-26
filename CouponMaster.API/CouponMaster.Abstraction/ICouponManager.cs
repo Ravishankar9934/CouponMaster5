@@ -14,5 +14,8 @@ namespace CouponMaster.Abstraction
 
         // Returns the DTO, not the raw Model
         Task<CouponReadDto?> GetCouponByIdAsync(int id);
+
+        Task<bool> RedeemCouponAsync(string username, int couponId);
+        Task<IEnumerable<Coupon>> GetCouponsByUsernameAsync(string username);
     }
 }

@@ -28,6 +28,10 @@ import { CalendarModule } from 'primeng/calendar'; // Datepicker
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DataViewModule } from 'primeng/dataview';
 import { CouponDetailComponent } from './components/coupon-detail/coupon-detail.component'; // Import this
+
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { MyCouponsComponent } from './components/my-coupons/my-coupons.component'; // Service needed for toast
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +41,8 @@ import { CouponDetailComponent } from './components/coupon-detail/coupon-detail.
     HeaderComponent,
     FooterComponent,
     RegisterComponent,
-    CouponDetailComponent
+    CouponDetailComponent,
+    MyCouponsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,8 @@ import { CouponDetailComponent } from './components/coupon-detail/coupon-detail.
     InputTextareaModule,
     CalendarModule,
     InputNumberModule,
-    DataViewModule
+    DataViewModule,
+    ToastModule
     
   ],
   providers: [
@@ -60,7 +66,8 @@ import { CouponDetailComponent } from './components/coupon-detail/coupon-detail.
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true // Essential! Allows multiple interceptors
-    }
+    },
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

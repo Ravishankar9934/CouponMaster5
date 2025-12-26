@@ -4,6 +4,7 @@
   <div class="menu" *ngIf="isLoggedIn">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
     <a routerLink="/add" routerLinkActive="active">Add Coupon</a>
+    <a routerLink="/my-coupons" routerLinkActive="active">My Wallet</a>
     <button (click)="onLogout()" class="logout-btn">Logout</button>
   </div>
 </nav>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Coupon } from 'src/app/models/coupon.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CouponService } from 'src/app/services/coupon.service';
@@ -11,10 +12,10 @@ import { CouponService } from 'src/app/services/coupon.service';
 })
 export class CouponListComponent implements OnInit {
 
- coupons: Coupon[] = [];
+  coupons: Coupon[] = [];
   isAdmin = false; // <--- Track this
 
-  constructor(private couponService: CouponService, private auth: AuthService,private router: Router) { }
+  constructor(private couponService: CouponService, private auth: AuthService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
     // Check role immediately
@@ -34,9 +35,31 @@ export class CouponListComponent implements OnInit {
         this.router.navigate(['/']);
       });
     }
-    else{
+    else {
       console.log("Deletion cancelled");
       this.router.navigate(['/']);
     }
+  }
+
+  redeemCoupon(coupon: Coupon) {
+    // Call API (We will add this method to service next)
+    this.couponService.redeemCoupon(coupon.id).subscribe({
+      next: () => {
+        // Show Success Toast
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Redeemed!',
+          detail: `You have added ${coupon.title} to your wallet.`
+        });
+      },
+      error: (err) => {
+        // Show Error Toast
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error?.message || 'Already redeemed.'
+        });
+      }
+    });
   }
 }

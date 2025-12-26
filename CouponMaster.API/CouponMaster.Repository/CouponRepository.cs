@@ -86,5 +86,43 @@ namespace CouponMaster.Repository
                 return await connection.QuerySingleOrDefaultAsync<Coupon>(sql, new { Id = id });
             }
         }
+
+        public async Task<bool> RedeemCouponAsync(string username, int couponId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                // Get User ID
+                var userId = await connection.ExecuteScalarAsync<int>(
+                    "SELECT Id FROM Users WHERE Username = @username", new { username });
+
+                // Check duplicate
+                var count = await connection.ExecuteScalarAsync<int>(
+                    "SELECT COUNT(1) FROM UserCoupons WHERE UserId = @userId AND CouponId = @couponId",
+                    new { userId, couponId });
+
+                if (count > 0) return false; // Already redeemed
+
+                // Insert
+                await connection.ExecuteAsync(
+                    "INSERT INTO UserCoupons (UserId, CouponId) VALUES (@userId, @couponId)",
+                    new { userId, couponId });
+
+                return true;
+            }
+        }
+
+        public async Task<IEnumerable<Coupon>> GetCouponsByUsernameAsync(string username)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var sql = @"
+                SELECT c.* FROM Coupons c
+                JOIN UserCoupons uc ON c.Id = uc.CouponId
+                JOIN Users u ON uc.UserId = u.Id
+                WHERE u.Username = @username";
+
+                return await connection.QueryAsync<Coupon>(sql, new { username });
+            }
+        }
     }
 }
